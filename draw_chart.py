@@ -11,7 +11,7 @@ def draw_bar_chart(data, display_area):
     ax.set_title('Tổng số giải thưởng theo năm', fontsize=14, color="White") 
     ax.set_xlabel('Năm', fontsize=12, color="White") 
     ax.set_ylabel('Số Giải Thưởng', fontsize=12, color="White")
-    ax.tick_params(axis='x', colors="White") 
+    ax.tick_params(axis='x', rotation=45, colors="White") 
     ax.tick_params(axis='y', colors="White")  
     plt.tight_layout()
 
