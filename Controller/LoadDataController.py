@@ -30,6 +30,6 @@ def load_data_into_table(display_area, file_path):
         
         # Tùy chỉnh kiểu cho Treeview
         style = ttk.Style()
-        style.configure("mystyle.Treeview", background="#2E2E2E", foreground="white", rowheight=30, fieldbackground="black", font=("Segoe UI", 12))
-        style.map('mystyle.Treeview', background=[('selected', 'dark gray')])
-        style.configure("mystyle.Treeview.Heading", font=("Segoe UI", 14, "bold"))
+        style.configure("mystyle.Treeview", background="#333333", foreground="#FFFFFF", rowheight=30, fieldbackground="black", font=("Helvetica", 12))
+        style.map('mystyle.Treeview', background=[('selected', '#FFD700')], foreground=[('selected', 'black')])
+        style.configure("mystyle.Treeview.Heading", font=("Helvetica", 12, "bold"))
