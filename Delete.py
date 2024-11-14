@@ -120,12 +120,150 @@ def delete_movie():
 
     # Hiển thị dữ liệu ban đầu
     display_data()
+    
+def edit_movie():
+    # Xóa các widget hiện có trong display_area
+    for widget in display_area.winfo_children():
+        widget.destroy()
+
+    # Tạo frame tìm kiếm bên trái, chiếm 1/4 diện tích display_area
+    edit_frame = tk.Frame(display_area, bg="#333333", width=display_area.winfo_width() // 4, height=display_area.winfo_height(), bd=0, highlightthickness=0)
+    edit_frame.pack(side="left", fill="y")
+    edit_frame.pack_propagate(False)
+
+    # Tạo frame kết quả bên phải, chiếm 3/4 diện tích display_area
+    result_frame = tk.Frame(display_area, bg="#1E1E1E", width=3 * display_area.winfo_width() // 4, height=display_area.winfo_height(), bd=0, highlightthickness=0)
+    result_frame.pack(side="right", fill="both", expand=True)
+    result_frame.pack_propagate(False)
+
+    # Thêm tiêu đề cho khung chỉnh sửa
+    edit_title = tk.Label(edit_frame, text="Edit Movie", font=title_font, fg="#FFD700", bg="#333333")
+    edit_title.pack(pady=(10, 15))
+
+    # Ô nhập liệu cho tìm kiếm phim
+    search_label = tk.Label(edit_frame, text="Enter movie name:", font=button_font, fg="#FFD700", bg="#333333")
+    search_label.pack(pady=5)
+    search_entry = tk.Entry(edit_frame, width=25, bg="#2E2E2E", fg="#FFD700", font=button_font, insertbackground="#FFD700")
+    search_entry.pack(pady=5)
+
+    # Các trường nhập liệu
+    award_entry = tk.Entry(edit_frame, width=25, bg="#2E2E2E", fg="#FFD700", font=button_font, insertbackground="#FFD700")
+    nomination_entry = tk.Entry(edit_frame, width=25, bg="#2E2E2E", fg="#FFD700", font=button_font, insertbackground="#FFD700")
+
+    # Khung hiển thị thông tin
+    detail_frame = tk.Frame(edit_frame, bg="#333333")
+    detail_frame.pack(pady=(10, 0))
+    data = pd.read_csv("Data/oscar.csv")
+
+    style = ttk.Style()
+    style.configure("Custom.Treeview",
+                        background="#333333",
+                        foreground="#FFFFFF",
+                        rowheight=25,
+                        fieldbackground="#333333")
+    style.map("Custom.Treeview", background=[("selected", "#FFD700")], foreground=[("selected", "#1E1E1E")])
+
+    columns = data.columns.tolist()
+    tree = ttk.Treeview(result_frame, columns=columns, show="headings", style="Custom.Treeview", selectmode = "extended")
+
+    # Thiết lập tiêu đề cột
+    for col in columns:
+        tree.heading(col, text=col, anchor="center")
+        tree.column(col, anchor="center", width=150)
+
+    # Thêm dữ liệu vào Treeview
+    for _, row in data.iterrows():
+        tree.insert("", "end", values=row.tolist())
+
+    tree.pack(side="left", fill="both", expand=True)
+
+        # Thanh cuộn dọc
+    scrollbar = ttk.Scrollbar(result_frame, orient="vertical", command=tree.yview)
+    scrollbar.pack(side="right", fill="y")
+    tree.configure(yscroll=scrollbar.set)
+
+    # Hàm hiển thị thông tin chi tiết
+    def show_record_details(record):
+        for widget in detail_frame.winfo_children():
+            widget.destroy()
+
+        # Thông tin phim
+        film_label = tk.Label(detail_frame, text=f"Film: {record['Film']}", font=button_font, fg="#FFD700", bg="#333333")
+        film_label.pack(anchor="w", pady=5)
+
+        # Ô nhập liệu cho Award
+        award_label = tk.Label(detail_frame, text=f"Award: {record['Award']}", font=button_font, fg="#FFD700", bg="#333333")
+        award_label.pack(anchor="w", pady=5)
+        award_entry.pack(anchor="w", pady=5)
+        award_entry.delete(0, tk.END)
+        award_entry.insert(0, str(record['Award']))
+
+        # Ô nhập liệu cho Nomination
+        nomination_label = tk.Label(detail_frame, text=f"Nomination: {record['Nomination']}", font=button_font, fg="#FFD700", bg="#333333")
+        nomination_label.pack(anchor="w", pady=5)
+        nomination_entry.pack(anchor="w", pady=5)
+        nomination_entry.delete(0, tk.END)
+        nomination_entry.insert(0, str(record['Nomination']))
+
+        # Nút lưu thay đổi
+        save_button = tk.Button(detail_frame, text="Save Changes", command=lambda: save_changes(record['Film']), bg="#FFD700", fg="#1E1E1E", font=button_font, width=12)
+        save_button.pack(pady=10)
+
+    # Hàm lưu thay đổi vào CSV
+    def save_changes(film_name):
+        new_award = award_entry.get()
+        new_nomination = nomination_entry.get()
+
+        try:
+            new_award = int(new_award)
+            new_nomination = int(new_nomination)
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Award and Nomination must be integers.")
+            return
+
+        data = pd.read_csv("Data/oscar.csv")
+        data.loc[data['Film'] == film_name, 'Award'] = new_award
+        data.loc[data['Film'] == film_name, 'Nomination'] = new_nomination
+        data.to_csv("Data/oscar.csv", index=False)
+        messagebox.showinfo("Success", f"Updated {film_name} successfully.")
+        perform_search()  # Cập nhật lại bảng kết quả sau khi lưu
+
+    # Hàm tìm kiếm phim và hiển thị kết quả
+    def perform_search(event=None):
+        movie_name = search_entry.get().strip()
+        data = pd.read_csv("Data/oscar.csv")
+        filtered_data = data[data["Film"].str.contains(movie_name, case=False, na=False)]
+
+        # Xóa các dòng cũ trong Treeview
+        for item in tree.get_children():
+            tree.delete(item)
+
+        # Thêm dữ liệu vào Treeview
+        for _, row in filtered_data.iterrows():
+            tree.insert("", "end", values=(row["ID"], row["Film"],row["Year"] ,row["Award"], row["Nomination"]))
+            
+
+    # Xử lý khi chọn một dòng trong Treeview
+    def on_tree_select(event):
+        selected_item = tree.selection()
+        if selected_item:
+            item_data = tree.item(selected_item, "values")
+            data = pd.read_csv("Data/oscar.csv")
+            record = data[data["Film"] == item_data[1]].iloc[0].to_dict()
+            show_record_details(record)
+
+    tree.bind("<<TreeviewSelect>>", on_tree_select)
+
+    # Nút tìm kiếm
+    # search_button = tk.Button(edit_frame, text="Search", command=perform_search, bg="#FFD700", fg="#1E1E1E", font=button_font)
+    # search_button.pack(pady=10)
+    search_entry.bind("<Return>", perform_search)
 
 buttons = [
     # ("Load Data", lambda: load_data(display_area)),
     # ("Add Movie", add_movie),
     ("Delete Movie", delete_movie),
-    # ("Edit Movie", edit_movie),
+    ("Edit Movie", edit_movie)
     # ("Search Movie", search_movie),
     # ("Chart", print_chart)
 ]
