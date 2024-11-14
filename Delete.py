@@ -70,7 +70,7 @@ def delete_movie():
         style.map("Custom.Treeview", background=[("selected", "#FFD700")], foreground=[("selected", "#1E1E1E")])
 
         columns = data.columns.tolist()
-        tree = ttk.Treeview(result_frame, columns=columns, show="headings", style="Custom.Treeview")
+        tree = ttk.Treeview(result_frame, columns=columns, show="headings", style="Custom.Treeview", selectmode = "extended")
 
         # Thiết lập tiêu đề cột
         for col in columns:
@@ -95,15 +95,16 @@ def delete_movie():
                 messagebox.showerror("Error", "No movie selected. Please select a movie to delete.")
                 return
 
-            # Lấy giá trị của phim được chọn
-            selected_movie = tree.item(selected_item)["values"]
-            movie_name = selected_movie[1]  # Tên phim nằm ở cột đầu tiên
+            # Lấy danh sách của các phim được chọn
+            selected_movies = [tree.item(item)["values"][1] for item in selected_item]
+            movie_name = "/n".join(selected_movies)
 
             # Xác nhận xóa
             confirm = messagebox.askyesno("Confirm Delete", f"Are you sure you want to delete '{movie_name}'?")
             if confirm:
                 # Xóa dữ liệu khỏi DataFrame
-                data.drop(data[data["Film"] == movie_name].index, inplace=True)
+                for movie_name in selected_movies:
+                    data.drop(data[data["Film"] == movie_name].index, inplace=True)
                 # Cập nhật lại cột ID
                 data.reset_index(drop=True, inplace=True)
                 data["ID"] = data.index + 1  # ID bắt đầu từ 1
