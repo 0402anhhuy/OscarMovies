@@ -21,6 +21,8 @@ title_label.pack(pady=10, padx=(190, 10))
 button_frame = tk.Frame(window, bg='#1E1E1E')
 button_frame.pack(side="left", fill="y", padx=20, pady=10, expand=False)
 
+
+
 # Sự kiện hover cho nút
 def on_enter(e):
     e.widget['bg'] = "#FFD700"
@@ -44,6 +46,10 @@ def delete_movie():
     # Tiêu đề của chức năng xóa phim
     delete_title = tk.Label(delete_frame, text="Delete Movie", font=title_font, fg="#FFD700", bg="#333333")
     delete_title.pack(pady=(10, 15))
+
+    # Biến lưu trữ nút delete
+    delete_button = tk.Button(delete_frame, text="Delete", bg="#FFD700", fg="#1E1E1E", font=button_font, width=12)
+    delete_button.pack(pady=20)
 
     # Hàm hiển thị dữ liệu phim từ file CSV
     def display_data():
@@ -108,12 +114,12 @@ def delete_movie():
                 # Tải lại dữ liệu sau khi xóa
                 display_data()
 
-        if not hasattr(display_data, "delete_button"):
-            display_data.delete_button = tk.Button(delete_frame, text="Delete", command=confirm_delete, bg="#FFD700", fg="#1E1E1E", font=button_font, width=12)
-            display_data.delete_button.pack(pady=20)
+        # Gán lại sự kiện cho nút delete
+        delete_button.config(command=confirm_delete)
 
     # Hiển thị dữ liệu ban đầu
     display_data()
+
 buttons = [
     # ("Load Data", lambda: load_data(display_area)),
     # ("Add Movie", add_movie),
