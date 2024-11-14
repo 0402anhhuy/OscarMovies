@@ -28,6 +28,7 @@ def load_data_into_table(display_area, file_path):
         tree.configure(yscrollcommand=y_scroll.set)
         y_scroll.pack(side="right", fill="y")
         
+        
         # Tùy chỉnh kiểu cho Treeview
         style = ttk.Style()
         style.configure("mystyle.Treeview", background="#333333", foreground="#FFFFFF", rowheight=30, fieldbackground="black", font=("Helvetica", 12))
