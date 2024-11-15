@@ -81,13 +81,13 @@ def print_chart():
     button_font = ("Arial", 12)
 
     # Tạo 3 nút cho 3 loại biểu đồ và đưa chúng lên góc trên bên trái của chart_frame
-    button1 = tk.Button(chart_frame, text="Biểu đồ cột", font=button_font, fg="#FFD700", bg="#444444", command=lambda: draw_chart('1'))
+    button1 = tk.Button(chart_frame, text="Biểu đồ cột", font=button_font, fg="#333333", bg="#FFD700", command=lambda: draw_chart('1'))
     button1.grid(row=1, column=0, padx=5, pady=5, sticky="n")
 
-    button2 = tk.Button(chart_frame, text="Biểu đồ tròn", font=button_font, fg="#FFD700", bg="#444444", command=lambda: draw_chart('2'))
+    button2 = tk.Button(chart_frame, text="Biểu đồ tròn", font=button_font, fg="#333333", bg="#FFD700", command=lambda: draw_chart('2'))
     button2.grid(row=1, column=1, padx=5, pady=5, sticky="n")
 
-    button3 = tk.Button(chart_frame, text="Biểu đồ đường", font=button_font, fg="#FFD700", bg="#444444", command=lambda: draw_chart('3'))
+    button3 = tk.Button(chart_frame, text="Biểu đồ đường", font=button_font, fg="#333333", bg="#FFD700", command=lambda: draw_chart('3'))
     button3.grid(row=1, column=2, padx=5, pady=5, sticky="n")
 
     # Cấu hình hàng và cột trong chart_frame để đảm bảo các nút gọn gàng ở góc trên bên trái và tiêu đề căn giữa
