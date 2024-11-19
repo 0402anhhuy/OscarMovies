@@ -11,7 +11,7 @@ def add_movie_data(oscar, film, year, award, nomination):
 
     for row in data:
         if not added:
-            newFilmList.append(["0", film, year, award, nomination])
+            newFilmList.append([0, film, year, award, nomination])
             added = True
         
         newFilmList.append(row)
