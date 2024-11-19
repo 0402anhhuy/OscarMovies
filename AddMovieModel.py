@@ -6,24 +6,15 @@ def add_movie_data(oscar, film, year, award, nomination):
     
     header = reader[0]
     data = reader[1:]
-
-    years = [int(row[2]) for row in data]
-    maxYear = max(years) if years else 0
-
     newFilmList = []
     added = False
 
     for row in data:
-        currentYear = int(row[2])
-
-        if not added and currentYear > year:
-            newFilmList.append(["", film, year, award, nomination])
+        if not added:
+            newFilmList.append(["0", film, year, award, nomination])
             added = True
         
         newFilmList.append(row)
-
-    if not added:
-        newFilmList.append(["", film, year, award, nomination])
 
     for idx, row in enumerate(newFilmList, start=1):
         row[0] = str(idx)
