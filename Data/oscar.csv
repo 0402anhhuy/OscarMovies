@@ -1,10 +1,10 @@
 ID,Film,Year,Award,Nomination
 1,Iron man,2008,5,4
 2,Spiderman,2015,4,15
-3,Beauty and the Beast,2018,4,13
-4,Beauty and the Beast,2018,4,13
-5,Beauty and the Beast,2018,4,13
-6,Beauty and the Beast,2018,4,13
+3,Beauty and the Beast,2018,9,10
+4,Beauty and the Beast,2018,9,10
+5,Beauty and the Beast,2018,9,10
+6,Beauty and the Beast,2018,9,10
 7,Lalaland,2020,4,5
 8,Everything Everywhere All at Once,2022,7,11
 9,All Quiet on the Western Front,2022,4,9
@@ -461,7 +461,7 @@ ID,Film,Year,Award,Nomination
 460,Terminator 2: Judgment Day,1991,4,6
 461,Bugsy,1991,2,10
 462,JFK,1991,2,8
-463,Beauty and the Beast,1991,2,6
+463,Beauty and the Beast,1991,9,10
 464,Thelma &amp; Louise,1991,1,6
 465,The Fisher King,1991,1,5
 466,In the Shadow of the Stars,1991,1,1
