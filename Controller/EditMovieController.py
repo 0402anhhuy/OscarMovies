@@ -1,4 +1,3 @@
-import pandas as pd
 from tkinter import messagebox
 from Model.LoadDataModel import load_data
 

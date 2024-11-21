@@ -1,4 +1,3 @@
-import pandas as pd
 from tkinter import messagebox
 from Model.LoadDataModel import load_data
 
@@ -23,7 +22,13 @@ def delete_movie_data(file_path_csv, selected_movies, display_data):
         # Xóa từng phim có tên trong danh sách `movie_names`
         for movie_name in movie_names:
             # Tìm các dòng có tên phim khớp và xóa chúng
-            data.drop(data[data["Film"] == movie_name].index, inplace=True)
+            indices = data[data["Film"] == movie_name].index
+        
+            # Nếu có nhiều bản ghi, xóa tất cả trừ bản ghi đầu tiên
+            if len(indices) > 1:
+                data.drop(indices[1:], inplace=True)
+
+
 
         # Đặt lại chỉ số index cho dataframe sau khi xóa
         data.reset_index(drop=True, inplace=True)

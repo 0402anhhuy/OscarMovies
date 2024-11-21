@@ -1,6 +1,5 @@
 import sys, os, re
 import tkinter as tk
-import pandas as pd
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from tkinter import font, ttk, messagebox, Button
 from functools import partial
@@ -75,6 +74,25 @@ def clear_tree(tree):
 
 # Hàm tạo frame
 def createFrame(window, bg=None, side=None, fill=None, padx=None, pady=None, expand=None, width=None, height=None, relx=None, rely=None, anchor=None, bd=0, highlightthickness=0, propagate=None, relief=None, borderwidth=None):
+    
+    """
+            Tham số:
+        - window: widget cha
+        - bg: màu nền của Frame
+        - side: vị trí khi sử dụng pack
+        - fill: cách Frame mở rộng khi pack
+        - padx, pady: khoảng cách (padding) ngang và dọc khi dùng pack
+        - expand: nếu True, Frame sẽ mở rộng chiếm không gian trống khi pack
+        - width, height: chiều rộng và chiều cao của Frame
+        - relx, rely: tọa độ tương đối của Frame khi dùng place (từ 0.0 đến 1.0)
+        - anchor: điểm neo của Frame khi dùng place
+        - bd: độ dày đường viền Frame
+        - highlightthickness: độ dày của viền nổi bật
+        - propagate: điều khiển kích thước Frame tự động điều chỉnh theo nội dung (True/False)
+        - relief: kiểu hiển thị đường viền
+        - borderwidth: độ dày của viền
+    """
+
     template_frame = tk.Frame(window, bg=bg, width=width, height=height, bd=bd, highlightthickness=highlightthickness, relief=relief, borderwidth=borderwidth)
     if relx is not None and rely is not None:
         template_frame.place(relx=relx, rely=rely, anchor=anchor)
@@ -87,11 +105,37 @@ def createFrame(window, bg=None, side=None, fill=None, padx=None, pady=None, exp
 
 # Hàm tạo font
 def createFont(size, weight):
+
+    """
+        Tham số:
+        - size: kích thước của font
+        - weight: độ đậm của font
+    """
+
     template_font = font.Font(family="Helvetica", size=size, weight=weight)
     return template_font
 
 # Hàm tạo nhãn
 def createLabel(window, text=None, font=None, fg=None, bg=None, padx=0, pady=0, side=None, fill=None, anchor=None, row=None, column=None, columnspan=None, sticky=None, use_grid=False,):
+    
+    """
+        Tham số:
+        - window: widget cha
+        - text: nội dung của nhãn
+        - font: font chữ
+        - fg: màu chữ
+        - bg: màu nền
+        - padx, pady: khoảng cách (padding) ngang và dọc
+        - side: vị trí khi sử dụng pack
+        - fill: cách nhãn mở rộng khi pack
+        - anchor: điểm neo của nhãn khi sử dụng place
+        - row, column: vị trí của nhãn trong grid
+        - columnspan: số cột mà nhãn chiếm trong grid
+        - sticky: căn chỉnh của nhãn trong grid
+        - use_grid: sử dụng grid hay pack
+
+    """
+
     template_label = tk.Label(window, text=text, font=font, fg=fg, bg=bg)
     if use_grid:
         template_label.grid(row=row, column=column, padx=padx, pady=pady, columnspan=columnspan, sticky=sticky)
@@ -101,6 +145,27 @@ def createLabel(window, text=None, font=None, fg=None, bg=None, padx=0, pady=0, 
 
 # Hàm tạo nút
 def createButton(window, text, command=None, width=None, height=None, borderwidth=1, relief="flat", bg=None, fg=None, font=None, side=None, anchor=None, row=None, column=None, padx=0, pady=0, sticky=None, expand=False, use_grid=False):
+    
+    """
+        Tham số:
+        - window: widget cha
+        - text: nội dung của nút
+        - command: hàm xử lý sự kiện khi click vào nút
+        - width, height: chiều rộng và chiều cao của nút
+        - borderwidth: độ dày của viền
+        - relief: kiểu hiển thị đường viền
+        - bg: màu nền của nút
+        - fg: màu chữ của nút
+        - font: font chữ
+        - side: vị trí khi sử dụng pack
+        - anchor: điểm neo của nút khi sử dụng place
+        - row, column: vị trí của nút trong grid
+        - padx, pady: khoảng cách (padding) ngang và dọc
+        - sticky: căn chỉnh của nút trong grid
+        - expand: nếu True, nút sẽ mở rộng chiếm không gian trống
+        - use_grid: sử dụng grid hay pack
+    """
+
     button = tk.Button(window, text=text, command=command, width=width, height=height, borderwidth=borderwidth, relief=relief, bg=bg, fg=fg, font=font)
     if use_grid:
         button.grid(row=row, column=column, padx=padx, pady=pady, sticky=sticky)
@@ -110,6 +175,24 @@ def createButton(window, text, command=None, width=None, height=None, borderwidt
 
 # Hàm tạo ô nhập liệu
 def createEntry(parent, width=None, bg=None, fg=None, font=None, insertbackground=None, side=None, fill=None, expand=None, ipady=None, padx=None, pady=None, row=None, column=None, use_grid=False):
+    
+    """
+        Tham số:
+        - parent: widget cha
+        - width: chiều rộng của ô nhập liệu
+        - bg: màu nền của ô nhập liệu
+        - fg: màu chữ của ô nhập liệu
+        - font: font chữ
+        - insertbackground: màu của dấu nháy trong ô nhập liệu
+        - side: vị trí khi sử dụng pack
+        - fill: cách ô nhập liệu mở rộng khi pack
+        - expand: nếu True, ô nhập liệu sẽ mở rộng chiếm không gian trống
+        - ipady: chiều cao của ô nhập liệu
+        - padx, pady: khoảng cách (padding) ngang và dọc
+        - row, column: vị trí của ô nhập liệu trong grid
+        - use_grid: sử dụng grid hay pack
+    """
+
     template_entry = tk.Entry(parent, width=width, bg=bg, fg=fg, font=font, insertbackground=insertbackground)
     if use_grid:
         template_entry.grid(row=row, column=column, padx=padx, pady=pady)
@@ -119,6 +202,22 @@ def createEntry(parent, width=None, bg=None, fg=None, font=None, insertbackgroun
 
 # Hàm tạo Treeview để hiển thị dữ liệu từ một DataFrame
 def createTreeview(window, data, style_name="Custom.Treeview", rowheight=30, bg="#333333", fg="#FFFFFF", selected_bg="#FFD700", selected_fg="#1E1E1E", heading_font=("Helvetica", 11, "bold"), row_font=("Helvetica", 11), selectmode="extended"):
+    
+    """
+        Tham số:
+        - window: widget cha
+        - data: DataFrame chứa dữ liệu cần hiển thị
+        - style_name: tên của style
+        - rowheight: chiều cao của mỗi hàng
+        - bg: màu nền của Treeview
+        - fg: màu chữ của Treeview
+        - selected_bg: màu nền khi chọn hàng
+        - selected_fg: màu chữ khi chọn hàng
+        - heading_font: font của tiêu đề cột
+        - row_font: font của dòng dữ liệu
+        - selectmode: chế độ chọn hàng
+    """
+
     # Tạo và cấu hình style cho Treeview
     style = ttk.Style()
     style.configure(style_name, background=bg, foreground=fg, rowheight=rowheight, fieldbackground=bg, font=row_font)
@@ -149,11 +248,20 @@ def onLeave(e):
 
 # Hàm xóa các widget con của một widget
 def clearWidgets(widget):
+    """
+        Tham số:
+        - widget: widget cần xóa các widget con
+    """
     for child in widget.winfo_children():
         child.destroy()
 
 # Thêm thanh cuộn dọc vào cửa sổ
 def themThanhCuonDoc(parent, tree):
+    """
+        Tham số:
+        - parent: widget cha
+        - tree: Treeview cần thêm thanh cuộn dọc
+    """
     y_scroll = ttk.Scrollbar(parent, orient="vertical", command=tree.yview)
     tree.configure(yscrollcommand=y_scroll.set)
     y_scroll.pack(side="right", fill="y")
@@ -188,7 +296,7 @@ def cleanData(file_path_csv, display_area):
         
         # Xử lý các năm bị lỗi (ít hơn 4 chữ số)
         def KiemTraNamHopLe(year):
-            return 1000 <= year <= 9999
+            return 1895 <= year <= 9999
         
         data = data[data['Year'].apply(KiemTraNamHopLe)]
         
@@ -206,7 +314,7 @@ def cleanData(file_path_csv, display_area):
         
         messagebox.showinfo("Success", "Data has been cleaned and reloaded successfully.")
 
-def addMovie():
+def add_movie():
     clearWidgets(display_area)
 
     # Frame hiển thị giao diện thêm phim mới
@@ -242,7 +350,7 @@ def addMovie():
         try:
             year = int(year)
             award = int(award)
-            nomination = int(nomination)
+            nomination = int(nomina.tion)
         except ValueError:
             messagebox.showerror("Invalid Data", "Year, award, and nomination count must be integers.")
             return
@@ -509,7 +617,7 @@ def print_chart():
 
 buttons = [
     ("Load Data", loadDataUI),
-    ("Add Movie", addMovie),
+    ("Add Movie", add_movie),
     ("Delete Movie", delete_movie),
     ("Edit Movie", edit_movie),
     ("Search Movie", search_movie),

@@ -11,8 +11,7 @@ def add_movie_data(oscar, film, year, award, nomination):
 
     for row in data:
         # Kiểm tra xem phim đã tồn tại trong danh sách chưa
-        currentYear = int(row[2])
-        if not isNewFilmInserted and currentYear > year:
+        if not isNewFilmInserted:
             newFilmList.append([0, film, year, award, nomination])
             isNewFilmInserted = True
         newFilmList.append(row)
