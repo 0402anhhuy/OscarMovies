@@ -350,7 +350,7 @@ def add_movie():
         try:
             year = int(year)
             award = int(award)
-            nomination = int(nomina.tion)
+            nomination = int(nomination)
         except ValueError:
             messagebox.showerror("Invalid Data", "Year, award, and nomination count must be integers.")
             return
