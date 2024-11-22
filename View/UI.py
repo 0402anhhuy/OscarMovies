@@ -480,7 +480,7 @@ def edit_movie():
         save_changes_to_csv(film_name, new_award, new_nomination)
         perform_search()
 
-    # Function to perform search
+    # Hàm tìm kiếm phim
     def perform_search(event=None):
         movie_name = edit_entry.get().strip()
         data = load_data(file_path_csv)
